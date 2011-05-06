@@ -1,10 +1,12 @@
 Chat::Application.routes.draw do
-  root :to => "messages#index"
-  
+  #root :to => "messages#index"
+  root :to => "messages#ajax"
   resources :messages
   resources :users
   resource :session
   
+  match '/messages/new' => "messages#new"
+  match '/messages/:id' => "message#ajax"
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
   

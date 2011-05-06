@@ -1,5 +1,19 @@
 class MessagesController < ApplicationController
-  before_filter :authenticate, :except => [:index, :show]
+  #before_filter :authenticate, :except => [:ajax]
+
+  @last_update = "";
+  # GET /messages
+  # GET /messages.xml
+  def ajax
+    
+    @messages = Message.all
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @messages }
+    end
+  end
+
   # GET /messages
   # GET /messages.xml
   def index
@@ -26,11 +40,12 @@ class MessagesController < ApplicationController
   # GET /messages/new.xml
   def new
     @message = Message.new
-
+    
     respond_to do |format|
-      format.html # new.html.erb
+      format.js # new.html.erb
       format.xml  { render :xml => @message }
     end
+    
   end
 
   # GET /messages/1/edit
@@ -46,7 +61,6 @@ class MessagesController < ApplicationController
     respond_to do |format|
       if @message.save
         @message.update_attributes(:user => current_user_name)
-        
         format.html { redirect_to(@message, :notice => 'Message was successfully created.') }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else

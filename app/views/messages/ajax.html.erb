@@ -1,0 +1,19 @@
+<h1>AJAX!</h1>
+
+<div id="messages_div">
+<table id="messages_area">
+  <tr>
+    <th>User</th>
+    <th>Message</th>
+    <th><%= @last_update%></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <script src="/messages.js"></script>
+</table>
+</div>
+<br />
+<%= link_to 'New Message', new_message_path(:format=>:js), :remote => true, :id =>'new_message_link' %>
+
+<br />
+<%= link_to 'New User', :controller => "users", :action => "new" %>
